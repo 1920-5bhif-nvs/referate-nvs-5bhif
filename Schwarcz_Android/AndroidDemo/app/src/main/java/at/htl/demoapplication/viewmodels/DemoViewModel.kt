@@ -8,8 +8,12 @@ import java.lang.IllegalArgumentException
 
 class DemoViewModel(application: Application) : AndroidViewModel(application) {
 
+    // TODO viewModelJob
+    // TODO viewModelScope
     // TODO database
     // TODO repository
+
+    // TODO init
 
     // TODO persons
 

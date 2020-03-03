@@ -1,0 +1,77 @@
+= Android Services
+:toc:
+
+:source-dir: SimpleForegroundService\app\src\main
+:source-highlighter: coderay
+
+//\java\at\htl\simpleforegroundservice
+
+== Was ist ein Service?
+
+Ein Android Service ist eine Applikationskomponente, welche permanente und wiederholende Operationen im Hintergrund ausführt. Diese benögt keine Benutzerinteraktion und somit ist ein UI nicht notwendig.
+
+Ein Service wird durch eine andere Komponente (z.B. Activity) gestartet und bleibt selbst dann noch im Hintergrund aktiv, wenn der Benutzer z.B. zu einer anderen App wechselt oder die App, in der der Service gestartet wurde, zerstört ist. Außerdem muss jeder Service in die „AndroidManifest.xml„-Datei eingetragen werden.
+
+https://www.big-app.de/alles-zu-services-unter-android/
+
+
+=== Started Service
+
+Ein Started Service, auch Unbound Service genannt, ist ein Service, den eine andere App-Komponente (z.B. Activity) durch den Aufruf von `startService()` startet.
+Das führt wiederum zu einem Aufruf der Methode `onStartCommand()` des Services.
+
+Der Unbound Service kann auf zwei unterschiedliche Weisen beendet werden: 
+
+* Entweder beendet der Service sich nach Erledigung seiner Aufgabe durch den Aufruf der Methode `stopSelf()` selbst oder 
+* er wird durch eine andere Komponente mittels der Methode `stopService()` beendet.
+
+==== Foreground Service
+
+Ein Foreground Service ist für den Benutzer bemerkbar und muss als *Notification* dargestellt werden. Erst beim Beenden des Services kann die Notification geschlossen werden.
+
+==== Beispiel: Simple Foreground Service
+
+Wichtig ist es dabei im `AndroidManifest.xml` die Berechtigung für den Foreground 
+
+[source,xml]
+----
+include::{source-dir}\AndroidManifest.xml[tags=permission]
+----
+
+https://androidwave.com/foreground-service-android-example-in-kotlin/
+
+==== Background Service
+
+Wie der Name schon sagt, arbeitet dieser Service im Hintergrund. Dieser ist im Gegensatz zum Foreground Service nicht bemerkbar für den Benutzer. 
+
+==== Beispiel: Simple MusicPlayer Service
+
+https://o7planning.org/de/10421/die-anleitung-zu-android-services
+
+=== Bound Service
+
+Ein Bound Service ist ein Service, der es App-Komponenten (z.B. Activity, Content Provider etc.) erlaubt, diesen an sich zu binden durch den Aufruf `bindService()`. Dabei sind sowohl Komponenten der eigenen App, als auch Komponenten anderer Apps gemeint.
+
+Ein solcher Service muss am Ende über die Methode `onUnbind()` explizit wieder gelöst werden. Dabei besteht die Möglichkeit, dass sich mehrere Komponenten im selben Prozess gleichzeitig mit einem Bound Service verbinden können.
+
+== Lifecycle eines Services
+
+Services haben einen eigenen Lebenszyklus, der völlig unabhängig vom Lebenszyklus derjenigen Komponente ist, die diesen Service gestartet hat.
+
+=== Started Service Lifecycle
+
+image::images\startedLifecycle.svg[static,400]
+
+=== Bound Service Lifecycle
+
+image::images\boundLifecycle.svg[static,400]
+
+https://www.big-app.de/alles-zu-services-unter-android/
+
+== Quellen
+
+https://vogella.com/tutorials/AndroidServices/article.html
+
+https://developer.android.com/guide/components/services
+
+https://medium.com/@anant.rao07/android-bound-services-f1cceb2f1f3e

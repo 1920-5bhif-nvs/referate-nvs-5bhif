@@ -8,12 +8,9 @@
 
 == Was ist ein Service?
 
-Ein Android Service ist eine Applikationskomponente, welche permanente und wiederholende Operationen im Hintergrund ausführt. Diese benögt keine Benutzerinteraktion und somit ist ein UI nicht notwendig.
+Android Services sind Applikationskomponente, welche permanente und wiederholende Operationen im Hintergrund ausführen. Diese benögt keine Benutzerinteraktion und somit ist ein UI nicht notwendig.
 
 Ein Service wird durch eine andere Komponente (z.B. Activity) gestartet und bleibt selbst dann noch im Hintergrund aktiv, wenn der Benutzer z.B. zu einer anderen App wechselt oder die App, in der der Service gestartet wurde, zerstört ist. Außerdem muss jeder Service in die „AndroidManifest.xml„-Datei eingetragen werden.
-
-https://www.big-app.de/alles-zu-services-unter-android/
-
 
 === Started Service
 
@@ -75,3 +72,5 @@ https://vogella.com/tutorials/AndroidServices/article.html
 https://developer.android.com/guide/components/services
 
 https://medium.com/@anant.rao07/android-bound-services-f1cceb2f1f3e
+
+https://www.big-app.de/alles-zu-services-unter-android/

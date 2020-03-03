@@ -31,7 +31,7 @@ Ein Foreground Service ist für den Benutzer bemerkbar und muss als *Notificatio
 
 ==== Beispiel: Simple Foreground Service
 
-Wichtig ist es dabei im `AndroidManifest.xml` die Berechtigung für den Foreground 
+Wichtig ist es dabei im `AndroidManifest.xml` die Berechtigung für die Benutzung eines Foreground-Services hinzuzufügen.
 
 [source,xml]
 ----

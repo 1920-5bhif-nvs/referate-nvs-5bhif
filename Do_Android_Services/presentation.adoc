@@ -1,0 +1,81 @@
+= Android Services
+
+:source-dir: SimpleForegroundService\app\src\main
+:source-highlighter: coderay
+
+//\java\at\htl\simpleforegroundservice
+
+== Was ist ein Service?
+
+* Applikationskomponente
+* permanente und wiederholende Operationen 
+* im Hintergrund ausgeführt
+* keine Benutzerinteraktion nötig 
+* UI nicht notwendig
+
+https://www.big-app.de/alles-zu-services-unter-android/
+
+== Activity Lifecycle
+
+image::images\lifecycle.svg[static,450]
+
+== Started Service
+
+
+|=== 
+
+| `startService()` | startet den Service 
+
+| `onStartCommand()` | gefolgt von `startService()`
+
+| `stopSelf()` | Service beendet sich selbst 
+
+| `stopService()` | durch eine andere Komponente beenden 
+
+|=== 
+
+=== Started Service Lifecycle
+
+image::images\startedLifecycle.svg[static,400]
+
+
+=== Foreground Service
+
+* bemerkbar für den Benutzer
+* Darstellung als *Notification* 
+* Beendigung des Services -> Notification schließbar
+
+=== Beispiel: Simple Foreground Service
+
+https://androidwave.com/foreground-service-android-example-in-kotlin/
+
+=== Background Service
+
+* laufend im Hintergrund
+* unbemerkbar für den Benutzer 
+
+=== Beispiel: Simple MusicPlayer Service
+
+https://o7planning.org/de/10421/die-anleitung-zu-android-services
+
+== Bound Service
+
+* Bindung eines Services mit App-Komponente 
+
+|=== 
+
+| `bindService()`: | bindet den Service zur Komponente 
+
+| `onBind()` | gefolgt von `bindService()`
+
+| `onUnbind()` | ablösen des Services 
+
+|=== 
+
+=== Bound Service Lifecycle
+
+image::images\boundLifecycle.svg[static,400]
+
+
+
+

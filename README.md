@@ -11,4 +11,5 @@
 ### 9. [Quarkus Security, JWT](schloemmer_quarkus__jwt) von Leon Schlömmer (10. Dezember 2019)
 ### 10. [Soteria](Antensteiner_Soteria) von Thomas Antensteiner (17. Dezember 2019)
 ### 11. [JavaFX](Auinger_JavaFX) von Philipp Auinger (02. Februar 2020)
-### 12. [Android Services](Do_Android_Services) von Stephan Do (3. März 2020)
+### 12. [Java Webtechnologien](Deicker_Java-Webtechnologien) von René Deicker (06. Februar 2020)
+### 13. [Android Services](Do_Android_Services) von Stephan Do (3. März 2020)

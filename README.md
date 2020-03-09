@@ -2,8 +2,8 @@
 
 ### 1. [JPA](Leithenmayr_JPA) von Stefan Leithenmayr (22. Oktober 2019)
 ### 2. [Sockets, WebSockets & SSE](Kuchinka_Sockets_WebSockets_SSE) von Leon Kuchinka (22. Oktober 2019)
-### 3. Serverdeployment von Maximilian Hofer (22. Oktober 2019)
-### 4. CDI von Michael Frech (12. November 2019)
+### 3. [Serverdeployment](Hofer_AppServer) von Maximilian Hofer (22. Oktober 2019)
+### 4. [CDI](Frech_CDI) von Michael Frech (12. November 2019)
 ### 5. [JS + Frameworks](Nobis_JS_Frameworks) von Julian Nobis (12. November 2019)
 ### 6. [Mobile App Development](Lengauer_MobileAppDevelopment) von Mario Lengauer (12. November 2019)
 ### 7. [Microframeworks](Prieschl_MicroFrameworks) von Fabian Prieschl (3. Dezember 2019)
@@ -12,6 +12,7 @@
 ### 10. [Soteria](Antensteiner_Soteria) von Thomas Antensteiner (17. Dezember 2019)
 ### 11. [JavaFX](Auinger_JavaFX) von Philipp Auinger (02. Februar 2020)
 ### 12. Cloud Computing von Lukas Stransky (11. Februar 2020)
+### 12. [Java Webtechnologien](Deicker_Java-Webtechnologien) von René Deicker (06. Februar 2020)
 ### 13. [Android Services](Do_Android_Services) von Stephan Do (3. März 2020)
 
 

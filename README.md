@@ -16,3 +16,4 @@
 ### 14. [Android Services](Do_Android_Services) von Stephan Do (3. März 2020)
 ### 15. [Chatbots](Neuburger_Chatbots) von Jan Neuburger (???)
 ### 16. [Security](AhammerBrandmair_Security) von Fabian Ahammer und Stefan Brandmair (???)
+### 17. [OpenHab](Tripic_OpenHAB) von Nenad Tripic (10. März 2020)

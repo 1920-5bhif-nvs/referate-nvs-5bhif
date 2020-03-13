@@ -1,5 +1,5 @@
-= OpenHAB
-Nenad Tripic <tripicnenad@hotmail.com>
+= OpenHAB - Nenad Tripi&#x0107; 
+Nenad Tripić  <tripicnenad@hotmail.com>
 v1.0, 2020-03-13
 :toc:
 :toc-title: Table of contents
@@ -25,12 +25,12 @@ With the content of this directory you can locally setup openHab which gets and 
 == What is in this directory? 
 
 ==== Presentation
-In this directory you can find the presentation that I held.
+In this directory you can find the https://github.com/1920-5bhif-nvs/referate-nvs-5bhif/blob/master/Tripic_OpenHAB/openHAB_presentation.html[presentation] that I held.
 
 === Software
 
 ==== Docker-compose - docker a instance of OpenHAB and a MQTT-Broker
-Furthermore you will find a docker compose file to instantly start up a openHAB instance and a MQTT-Broker. With this setup you are able to implement a simple setup to test it but it is also powerful enough for you raspberry to implement it for your home. You can start up the the docker containers by
+Furthermore you will find a https://github.com/1920-5bhif-nvs/referate-nvs-5bhif/blob/master/Tripic_OpenHAB/docker-compose.yml[docker compose file] to instantly start up a openHAB instance and a MQTT-Broker. With this setup you are able to implement a simple setup to test it but it is also powerful enough for you raspberry to implement it for your home. You can start up the the docker containers by
 ----
 docker-compose up
 ----
@@ -40,7 +40,7 @@ image:images/MQTT-Binding.png[MQTT-Binding installation]
 image:images/control-panel.png[Control panel with temperature and humidity]
 
 ==== ESP32 - Software
-In order to display some footage via the MQTT-Broker you can flash a ESP32 with the software I provided in this [directory]. I would highly recommend flashing this software via VS Code and the extension https://platformio.org/[PlatformIO]. 
+In order to display some footage via the MQTT-Broker you can flash a ESP32 with the software I provided in this https://github.com/1920-5bhif-nvs/referate-nvs-5bhif/tree/master/Tripic_OpenHAB/ESP32-MQTT-Openhab[directory]. I would highly recommend flashing this software via VS Code and the extension https://platformio.org/[PlatformIO]. 
 
 IMPORTANT: One thing before you flash it: change the credentials in the main.cpp
 [code,C]

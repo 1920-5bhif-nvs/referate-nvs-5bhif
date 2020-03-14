@@ -6,9 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import at.htl.demoapplication.R
 import at.htl.demoapplication.databinding.FragmentDemoBinding
+import at.htl.demoapplication.domain.Person
 import at.htl.demoapplication.viewmodels.DemoViewModel
 
 class DemoFragment : Fragment() {
@@ -21,9 +25,16 @@ class DemoFragment : Fragment() {
             .get(DemoViewModel::class.java)
     }
 
-    // TODO Adapter
+    private var viewModelAdapter: DemoAdapter? = null
 
-    // TODO OnActivityCreated
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        viewModel.persons.observe(viewLifecycleOwner, Observer<List<Person>> { persons ->
+            persons.apply {
+                viewModelAdapter?.persons = persons
+            }
+        })
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -40,8 +51,11 @@ class DemoFragment : Fragment() {
 
         binding.viewModel = viewModel
 
-        // TODO adapter
-        // TODO recyclerview
+        viewModelAdapter = DemoAdapter()
+        binding.root.findViewById<RecyclerView>(R.id.recycler_view).apply {
+            layoutManager = LinearLayoutManager(context)
+            adapter = viewModelAdapter
+        }
 
         return binding.root
     }

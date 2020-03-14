@@ -4,18 +4,28 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import at.htl.demoapplication.database.getDatabase
+import at.htl.demoapplication.repository.PersonRepository
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.launch
 import java.lang.IllegalArgumentException
 
 class DemoViewModel(application: Application) : AndroidViewModel(application) {
 
-    // TODO viewModelJob
-    // TODO viewModelScope
-    // TODO database
-    // TODO repository
+    private val viewModelJob = SupervisorJob()
+    private val viewModelScope = CoroutineScope(viewModelJob + Dispatchers.Main)
+    private val database = getDatabase(application)
+    private val personRepository = PersonRepository(database)
 
-    // TODO init
+    init {
+        viewModelScope.launch {
+            personRepository.refreshPersons()
+        }
+    }
 
-    // TODO persons
+    val persons = personRepository.persons
 
     class Factory(private val app: Application) : ViewModelProvider.Factory {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {

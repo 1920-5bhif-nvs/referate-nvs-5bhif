@@ -10,3 +10,4 @@
 ### 8. [Django](Mayrhofer_Django) von Erik Mayrhofer (3. Dezember 2019)
 ### 9. [Soteria](Antensteiner_Soteria) von Thomas Antensteiner (17. Dezember 2019)
 ### 10. [JavaFX](Auinger_JavaFX) von Philipp Auinger (02. Februar 2020)
+### ??. [Android](Schwarcz_Android) von Florian Schwarcz (10. März 2020)

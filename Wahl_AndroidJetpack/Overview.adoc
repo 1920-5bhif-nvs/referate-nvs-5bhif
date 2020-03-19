@@ -1,0 +1,349 @@
+= Android Jetpack
+
+:toc:
+
+== Übersicht
+* Sammlung von Libraries zur Entwicklung von Android-Apps
+* High-Quality-Apps für jeden:
+    - Kein Boilerplate
+    - Schnelle Entwicklung
+    - Robuste Apps
+
+== Teilbereiche
+* Foundation: Android auf allen Geräten ermöglichen (Android Auto,Backwards Compatibility,...)
+* Architecture: Modulierung des Codes (DataBinding, ViewModel,...)
+* Behaviour: Standard-Fukntionalitäten (Kamera, Medienwiedergabe, Benachrichtigungen, ...)
+* UI: Einheitliches Aussehen der Apps (Layouts, Fragments, Animations)
+
+== Theorie
+
+=== DataBinding
+Durch DataBinding wird die Definition, welche Daten wo angezeigt werden, aus dem Code in die Layout-Definition verlegt.
+Außerdem wird sichergestellt, dass die Daten im Modell immer mit den angezeigten Daten übereinstimmen.
+
+==== Code
+Im Layout-File:
+[source,xml]
+----
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"> <!-- wrap old root element in new layout tag -->
+    <data>
+        <variable 
+            name="viewmodel"
+            type="at.htl.newviewmodel.MainActivityViewModel" /> <!-- define data that gets bound/ViewModel is discussed in next chapter -->
+    </data>
+    ....
+</layout>
+----
+Verwendung von gebundenen Daten:
+[source,xml]
+----
+    <!-- Text anzeigen -->
+    android:text="@={viewmodel.getDetective().name}" />
+
+    <!-- Funktionsaufruf bei onClick -->
+    android:onClick="@{()->viewmodel.setDetectiveName()}"/>
+
+----
+Im Code:
+[source,kotlin]
+----
+val binding: ActivityMainBinding = DataBindingUtil.setContentView(this,R.layout.activity_main) //get binding with Utility class
+        binding.lifecycleOwner = this //set lifecycleOwner, binding should get destroyed with its View
+        binding.viewmodel = viewModel //set data
+----
+
+=== ViewModel
+
+Mit einem ViewModel wird einerseits, dass MVVM-Pattern implementiert, andererseits werden die Daten aus der UI über den Lebenszyklus des haltenden Objekts hinaus (Bildschirm drehen, ...)
+
+==== Code
+Definition des ViewModels:
+[source,kotlin]
+----
+class MainActivityViewModel: ViewModel() { //ableiten einer Basisklasse die Funktionalität
+    private val _detective: MutableLiveData<Detective> = MutableLiveData() //MutableLiveData übernimmt automatisches Updaten in beide Richtungen - Modell <--> UI
+
+    fun getDetective(): LiveData<Detective> {
+        return _detective;
+    }
+
+    fun setDetectiveName() {
+       ...
+    }
+    fun addCases(){
+        ...
+    }
+}
+----
+Einbinden des ViewModels in der Activity:
+[source,kotlin]
+----
+viewModel = ViewModelProvider(this).get(MainActivityViewModel::class.java)
+----
+
+
+=== RecyclerView mit CardView
+Eine RecyclerView ermöglicht es, die Elemente einer Liste darzustellen (performanter als ListView). Eine RecyclerView kann einfach gestaltet werden, man kann aber auch die einzelnen Elemente als CardViews darstellen, die wiederum komplexe Darstellungen präsentieren können.
+
+==== Code
+Erstellen eines Adapters: (macht aus einer Datenquelle ein RecyclerView)
+[source,kotlin]
+----
+class CaseAdapter(cases: MutableList<Case>) : RecyclerView.Adapter<ViewHolder?>() {
+
+    private var cases: List<Case> = cases
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CaseViewHolder {//inflaten des einzelnen Elements aus der RecyclerView
+        val context: Context = parent.context
+        val inflater = LayoutInflater.from(context)
+        val caseView: View = inflater.inflate(R.layout.case_layout, parent, false)
+        return CaseViewHolder(caseView) //selbst definierte Card
+    }
+
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) { //verbinden der Card mit dem entsprechenden Item
+        val caseHolder = holder as CaseViewHolder
+        val case: Case = this.cases[position]
+        caseHolder.titleView.text = case.title
+        caseHolder.dateView.text = case.solvingDate.toString()
+    }
+
+    override fun getItemCount(): Int {
+        return cases.size
+    }
+
+    class CaseViewHolder(itemView:View): RecyclerView.ViewHolder(itemView){ //Code-Darstellung der einzelnen Card
+        var titleView: TextView = itemView.findViewById<View>(R.id.case_title) as TextView
+        var dateView: TextView = itemView.findViewById<View>(R.id.case_date) as TextView
+    }
+}
+----
+Layout einer Card:
+[source,xml]
+----
+<androidx.cardview.widget.CardView ...>
+
+    <LinearLayout
+       ...>
+
+        <TextView
+            android:id="@+id/case_title"
+            .../>
+
+        <TextView
+            android:id="@+id/case_date"
+            .../>
+
+
+    </LinearLayout>
+</androidx.cardview.widget.CardView>
+----
+Einbinden der RecyclerView im Code:
+[source,kotlin]
+----
+    viewManager = LinearLayoutManager(this) //zeige Liste untereinander an
+    viewAdapter = CaseAdapter(viewModel.getDetective().value!!.cases) // Adapter für die Liste erstellen
+    recyclerView = findViewById<RecyclerView>(R.id.cases_view).apply {
+        layoutManager = viewManager
+        adapter = viewAdapter
+    } //RecyclerView setzen
+----
+Bei Änderung der Liste muss der Adapter kontaktiert werden
+[source,kotlin]
+----
+    viewAdapter.notifyDataSetChanged()
+----
+
+
+=== Navigation
+Mit Navigation wird realisiert, dass eine Applikation verschiedene Ansichten mit verschiedenen Funktionen haben kann.
+
+==== Code
+Die verschiedenen Ansichten werden in Fragmenten angezeigt, diese werden dynamisch in ein Host-Fragment geladen, welches weiß, welche Navigationsmöglichkeiten es gibt.
+[source,xml]
+----
+<androidx.constraintlayout.widget.ConstraintLayout>
+...
+
+<fragment
+android:id="@+id/nav_host_fragment"
+app:navGraph="@navigation/mobile_navigation" <!-- Hier wird das Navigationsfile definiert, welches verwendet wird -->
+... />
+</androidx.constraintlayout.widget.ConstraintLayout>
+----
+Navigationfile:
+[source,xml]
+----
+<!-- Navigation gleicht Statusmaschine-die Ansichten sind die verschiedenen Stati -->
+<fragment
+        android:id="@+id/navigation_notifications"
+        android:name="at.htl.overalldemo.ui.notifications.NotificationsFragment"
+        android:label="@string/title_notifications"
+        tools:layout="@layout/fragment_notifications"
+        />
+    <fragment
+        android:id="@+id/navigation_home"
+        android:name="at.htl.overalldemo.ui.home.HomeFragment"
+        android:label="@string/title_home"
+        tools:layout="@layout/fragment_home">
+        <!-- von diesem Fragment gibt es eine Verbindung zu einem anderen Fragment/Statuswechsel-->
+        <action
+            android:id="@+id/action_HomeFragment_to_DashboardFragment"
+            app:destination="@id/navigation_dashboard">
+        </action>
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_dashboard"
+        android:name="at.htl.overalldemo.ui.dashboard.DashboardFragment"
+        android:label="@string/title_dashboard"
+        tools:layout="@layout/fragment_dashboard">
+        <!-- um in diesen Status zu gelangen, ist es notwendig einen gewissen Wert zu übergeben-->
+        <argument
+            android:name="share_msg"
+            app:argType="string"
+            android:defaultValue="sharing message"
+            />
+    </fragment>
+----
+Navigation per Code:
+[source,koptlin]
+----
+    //automatisch generierte Hilfsklasse mit allen Verbindungen
+    val action = HomeFragmentDirections.actionHomeFragmentToDashboardFragment(editText.text.toString()) //setzen des Parameters
+            NavHostFragment.findNavController(this@HomeFragment) //this@AktuellesFragment
+                    .navigate(action)
+----
+Argumentdekonstruktion:
+[source,kotlin]
+----
+                    //automatisch generierte Hilfsklasse
+    private val args: DashboardFragmentArgs by navArgs()
+    ...
+    editText.setText(args.shareMsg) //vgl. XML-Definition
+
+----
+
+
+=== Menüs
+Menüs sind eine Sammlung von Aktivitäten (nur Logik, keine Bindung an Darstellung), die entweder zur Navigation, in Verbindungen mit einem gewissen Objekt, oder mit statischen Funktionen verwendet werden können. 
+//TODO erklärung
+
+==== Code
+Definition eines Menüs zur Navigation zu allen Stati aus oberem Beispiel:
+[source,xml]
+----
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:menu="@menu/bottom_nav_menu"
+    >
+
+    <!--TODO 2. Was ist ein Menü? -->
+    <item
+        android:id="@+id/navigation_home"
+        android:icon="@drawable/ic_home_black_24dp"
+        android:title="@string/title_home"
+        />
+
+    <item
+        android:id="@+id/navigation_dashboard"
+        android:icon="@drawable/ic_dashboard_black_24dp"
+        android:title="@string/title_dashboard"
+        />
+
+    <item
+        android:id="@+id/navigation_notifications"
+        android:icon="@drawable/ic_notifications_black_24dp"
+        android:title="@string/title_notifications"
+        />
+
+</menu>
+----
+Einbinden des Menüs im Layout:
+[source,xml]
+----
+<androidx.constraintlayout.widget.ConstraintLayout>
+    <com.google.android.material.bottomnavigation.BottomNavigationView <!-- Menü das am unteren Bildschirmrand permanent angezeigt wird. -->
+android:id="@+id/nav_view"
+app:menu="@menu/bottom_nav_menu" /><!-- Welches Menü soll angezeigt werden -->
+
+    ...
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+----
+Verbinden des Menüs im Code:
+[source,kotlin]
+----
+    val navView: BottomNavigationView = findViewById(R.id.nav_view)
+    val navController = findNavController(R.id.nav_host_fragment)
+    
+    //Anzeige des Fragmentnamen in der Titlebar der App
+    val appBarConfiguration = AppBarConfiguration(setOf(
+                R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications))
+    setupActionBarWithNavController(navController, appBarConfiguration)
+
+    //Verbinden der Ansicht mit dem Navigationsfile    
+    navView.setupWithNavController(navController)
+----
+
+=== Intents
+Mit Intents kann ein Programm Daten an ein anderes Programm schicken und diese verarbeiten.
+
+==== Code
+Dieses System funktioniert durch _Actions_:
+Wenn ein Intent erstellt wird, wird dieser mit einer Action befüllt.
+Zusatzinfos können auch gespeichert werden (Text,Bilder, Kontakte,..).
+
+[source,kotlin]
+----
+val send: Intent = Intent().apply{
+    action = Intent.ACTION_SEND
+    putExtra(Intent.EXTRA_TEXT,editText.text.toString())
+    type = "text/plain"
+}
+----
+Es gibt sehr viele vordefinierte Actions, es ist aber auch möglich, eigene zu definieren.
+[source,kotlin]
+----
+    startActivity(send)
+----
+
+
+
+=== Notifications
+
+Notifications geben dem Benutzer Informationen zu/aus einer App, wenn diese nicht läuft.
+Notifications können auch Funktionalität haben:
+
+* Buttons
+* Antwort-Funktionen
+* Spezielles On-Click-Handling
+
+
+==== Code
+Notifications werden über einen Channel gesendet, der eine Verbindung zum Android-OS herstellt (es gibt auch Channels, die das System zur Verfügung stellt).
+
+[source,kotlin]
+----
+    val name = "notchanneldemo"
+    val descriptionText = "testing channel"
+    val importance = NotificationManager.IMPORTANCE_DEFAULT
+    val channel = NotificationChannel("demo_channel", name, importance).apply {
+        description = descriptionText
+    }
+----
+Danach kann die Notification erstellt werden und die Notification durch den Channel an das System gesendet werden.
+[source,kotlin]
+----
+val notification = NotificationCompat.Builder(this.context!!, "demo_channel")
+    .setSmallIcon(R.drawable.ic_baseline_notifications_24)
+    .setContentTitle(notTitle.text)
+    .setContentText(notContent.text)
+    .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+    .build()
+----
+[source,kotlin]
+----
+val notificationManager = this.context!!.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager?
+    notificationManager!!.createNotificationChannel(channel)
+    notificationManager.notify(1, notification)
+----

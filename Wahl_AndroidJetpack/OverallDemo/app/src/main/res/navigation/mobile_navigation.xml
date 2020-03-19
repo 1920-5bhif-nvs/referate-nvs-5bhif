@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_home"
+    >
+    <!--TODO 1. Navigation erklären -->
+
+    <!-- Normales Fragment -->
+    <fragment
+        android:id="@+id/navigation_notifications"
+        android:name="at.htl.overalldemo.ui.notifications.NotificationsFragment"
+        android:label="@string/title_notifications"
+        tools:layout="@layout/fragment_notifications"
+        />
+    <!-- Fragment mit einer Navigations-Action (ich drücke wo drauf und komme wohin) -->
+    <fragment
+        android:id="@+id/navigation_home"
+        android:name="at.htl.overalldemo.ui.home.HomeFragment"
+        android:label="@string/title_home"
+        tools:layout="@layout/fragment_home">
+
+        <action
+            android:id="@+id/action_HomeFragment_to_DashboardFragment"
+            app:destination="@id/navigation_dashboard">
+        </action>
+    </fragment>
+
+    <!-- Fragment mit einem Argument (Parameter), in Kombination mit Fragmenten mit Actions werden Parameter übergeben -->
+    <fragment
+        android:id="@+id/navigation_dashboard"
+        android:name="at.htl.overalldemo.ui.dashboard.DashboardFragment"
+        android:label="@string/title_dashboard"
+        tools:layout="@layout/fragment_dashboard">
+
+        <argument
+            android:name="share_msg"
+            app:argType="string"
+            android:defaultValue="sharing message"
+            />
+    </fragment>
+
+</navigation>

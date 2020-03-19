@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">NewViewmodel</string>
+    <string name="change_detectives_name">Change Detective Name</string>
+    <string name="break_the_app">Add Cases</string>
+</resources>

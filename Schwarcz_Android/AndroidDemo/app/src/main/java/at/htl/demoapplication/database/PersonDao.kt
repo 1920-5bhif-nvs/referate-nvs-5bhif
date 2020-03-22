@@ -11,4 +11,6 @@ interface PersonDao {
     fun getPersons(): LiveData<List<DatabasePerson>>
     @Insert
     fun insertAll(vararg persons: DatabasePerson)
+    @Query("delete from databaseperson")
+    fun deleteAll()
 }

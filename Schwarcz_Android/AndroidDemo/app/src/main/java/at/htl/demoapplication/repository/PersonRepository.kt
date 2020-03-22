@@ -21,6 +21,7 @@ class PersonRepository(private val database: PersonDatabase) {
         withContext(Dispatchers.IO) {
             val persons = Network.persons.getPersons().await()
             val personsContainer = NetworkPersonContainer(persons)
+            database.personDao.deleteAll()
             database.personDao.insertAll(*personsContainer.asDatabaseModel())
         }
     }

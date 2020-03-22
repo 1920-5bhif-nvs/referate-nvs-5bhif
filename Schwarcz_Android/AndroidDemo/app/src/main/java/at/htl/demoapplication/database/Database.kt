@@ -16,7 +16,8 @@ fun getDatabase(context: Context): PersonDatabase {
     synchronized(PersonDatabase::class.java) {
         if (!::INSTANCE.isInitialized) {
             INSTANCE = Room
-                .databaseBuilder(context.applicationContext, PersonDatabase::class.java, "persons")
+                .databaseBuilder(context.applicationContext, PersonDatabase::class.java,
+                    "persons")
                 .fallbackToDestructiveMigration()
                 .build()
         }

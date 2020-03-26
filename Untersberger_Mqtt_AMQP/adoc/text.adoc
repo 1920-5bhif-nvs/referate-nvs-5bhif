@@ -1,0 +1,204 @@
+:imagesdir: ./images
+:toc:
+
+= NVS Mqtt, AMQP
+
+== Vogelblickperspektive
+
+In meinem Referat werde ich ueber folgende Punkte sprechen.
+
+* MQTT
+* AMQP
+* Kafka
+
+Zu jedem Punkt wird es mindestens 1 Beispiel geben.
+
+== Mqtt
+
+Mqtt ist ein leichtgewichtiges publish/subscribe Protokoll, nicht nur durch die kleine Größe der Pakete pro Publish sondern auch wegen des geringen Stromverbrauchs ist MQTT ein sehr beliebtes Protokoll in der IOT-Welt.
+
+=== Begriffe
+
+==== Broker
+
+Ein Server, der alle Nachrichten von den Clients empfängt und diese dann an die entsprechenden Zielclients weiterleitet.
+
+==== Topic
+
+In MQTT verweist das Wort Topic auf eine UTF-8-Zeichenfolge, die der Broker zum Filtern von Nachrichten für jeden verbundenen Client verwendet. 
+Das Topic besteht aus einer oder mehreren Topiclevels. Jedes Topiclevel ist durch einen Slash getrennt.
+
+==== Quality of Service
+
+Das Quality of Service (QoS) Level ist eine Vereinbarung zwischen dem Absender einer Nachricht und dem Empfänger einer Nachricht, die die Zustellgarantie für eine bestimmte Nachricht definiert.
+
+
+=== Visualisierung
+
+image::mqtt-protocol.png[MQTT]
+
+Hier kann man gut sehen wie Mqtt funktioniert. Wie schon vorhin erwähnt basiert Mqtt auf dem pub-sub-pattern. 
+In dem Bild gibt es 3 Clients. Einmal den Sensor, welcher mit einem Mikrocontroller verbunden ist. Ein Laptop und ein Handy.
+
+Der Sensor published regelmäßig den aktuellen Wert auf ein beliebiges Topic. Die beiden anderen Clients sind auf das selbe Topic subscribed und bekommen dann die Werte des Sensors.
+
+Dies ist eigentlich die Essenz von Mqtt.
+
+=== Beispiel mit hivemq/mqtt-cli (cli)
+
+==== Mosquitto
+
+Mosquitto ist ein Mqtt broker von eclipse. Mit folgendem docker-compose file kann man den broker leicht starten.
+Wichtig ist es noch den Port 1883 freizugeben da dies der standard Port für Mqtt Broker ist.
+
+docker-compose.yml
+
+----
+version: '3'
+services:
+  mosquitto:
+    image: eclipse-mosquitto:1.6
+    ports:
+      - '1883:1883'
+----
+
+==== HiveMQ Mqtt Client
+
+https://hivemq.github.io/mqtt-cli/docs/installation/packages.html[Installations guide]
+
+Der mqtt client von hivemq nimmt an das der server auf localhost mit port 1883 rennt. Dies kann natürlich geändert werden.
+
+Jetzt subscriben wir auf das hallo topic. Dies erfolgt durch folgenden command.
+
+----
+mqtt sub -t hallo
+----
+
+Dies blockt den Terminal. Wir müssen jetzt einen neuen Terminal aufmachen damit wir eine neue Nachricht publishen können.
+
+Dies können wir mit folgenden command machen.
+
+----
+mqtt pub -t hallo -m welt
+----
+
+=== Beispiel mit eclipse/paho.mqtt.java (Java)
+
+=== Quality of Service
+
+==== QoS 0 - maximal einmal
+
+Die minimale QoS-Stufe ist 0. Dieser Service-Level garantiert eine bestmögliche Lieferung. 
+Es gibt keine Liefergarantie. Der Empfänger bestätigt den Empfang der Nachricht nicht und die Nachricht wird vom Absender nicht gespeichert und erneut gesendet. 
+QoS-Stufe 0 wird oft als "fire and forget" bezeichnet und bietet die gleiche Garantie wie das zugrunde liegende TCP-Protokoll.
+
+image::QoS-0.png[]
+
+==== QoS 1 - mindestens einmal
+
+QoS Level 1 garantiert, dass eine Nachricht mindestens einmal an den Empfänger übermittelt wird.
+Der Absender speichert die Nachricht, bis er vom Empfänger ein Rückmeldung erhält, das den Empfang der Nachricht bestätigt. Es ist möglich, dass eine Nachricht mehrmals gesendet oder zugestellt wird.
+
+image::QoS-1.png[]
+
+==== QoS 2 - genau einmal
+
+QoS 2 ist das höchste Servicelevel in MQTT. Diese Stufe garantiert, dass jede Nachricht nur einmal von den vorgesehenen Empfängern empfangen wird. 
+QoS 2 ist die sicherste und langsamste Servicequalität. Die Garantie wird durch mindestens zwei request/response flows zwischen dem Sender und dem Empfänger bereitgestellt. 
+
+image::QoS-2.png[]
+
+== AMQP
+
+=== Begriffe
+
+==== Channel
+
+Ein Channel ist eine virtuelle Verbindung innerhalb einer Verbindung. Wenn Sie Nachrichten aus einer Warteschlange veröffentlichen oder konsumieren, erfolgt dies alles über einen Channel.
+
+==== Queue
+
+In der Queue warten Nachrichten darauf, konsumiert zu werden. Wie in jeder anderen Warteschlange steht das First-In-First-Out Prinzip hier stark.
+Die Nachrichtenreihenfolge ist so wichtig, dass die Nachrichtenverarbeitung, wenn sie einen Fehler innerhalb des Verbrauchers auslöst, explizit abgelehnt werden sollte, um gelöscht oder an das Ende der Warteschlange gesendet zu werden. Andernfalls ist es möglich, die No-Ack-Eigenschaft beim Konsumieren festzulegen, sodass der Server nicht darauf warten würde, dass der Verbraucher die Bestätigung festlegt. In den meisten Fällen wird die Leistung gesteigert, jedoch auf Kosten der Zuverlässigkeit.
+
+=== Wie funktioniert AMQP?
+
+image::amqp-example.png[]
+
+Das AMQP Protokoll hat die folgende Sicht auf die Welt: Nachrichten werden an Broker veröffentlicht, die häufig mit Postämtern oder Postfächern verglichen werden. Die Exchanges verteilen dann Nachrichtenkopien mithilfe von Regeln, die als Bindings bezeichnet werden, an Warteschlangen. Dann liefert der Broker entweder Nachrichten an Consumer, die Warteschlangen abonniert haben, oder Consumer fetchen bei Bedarf Nachrichten aus Warteschlangen bzw. pullen sie.
+
+Netzwerke sind unzuverlässig und Anwendungen können möglicherweise keine Nachrichten verarbeiten. Daher hat das AMQP Protokoll den Begriff der Nachrichtenbestätigung: Wenn eine Nachricht an einen Consumer übermittelt wird, benachrichtigt der Consumer den Broker entweder automatisch oder sobald der Anwendungsentwickler dies wünscht um dies zu tun. Wenn Nachrichtenbestätigungen verwendet werden, entfernt ein Broker eine Nachricht erst dann vollständig aus einer Warteschlange, wenn er eine Benachrichtigung für diese Nachricht (oder eine Gruppe von Nachrichten) erhält.
+
+Warteschlangen, Exchanges und Bindings werden zusammen als AMQP-Entitäten bezeichnet.
+
+=== RabbitMq
+
+RabbitMq ist einer der beliebtesten open source message brokern. Er supported nicht nur AMQP sondern auch MQTT, was ihn zu einem Konkurrenten von Mosquitto und andere Mqtt Broker macht. 
+
+Da er beide Protokolle unterstuetzt kann ein z.B.: ein Mikrocontroller mit dem Broker mittels MQTT kommunizieren und ein anderes Programm mittels AMQP die Nachrichten bekommen. Dies bringt das Beste von beiden Welten zusammen und ist ein grosser Pluspunkt fuer RabbitMq.
+
+=== Beispiel
+
+docker-compose.yml
+
+----
+version: '3'
+services:
+  rabbitmq:
+    image: rabbitmq:3.8
+    ports:
+      - '5672:5672'
+    environment:
+      - RABBITMQ_DEFAULT_USER=admin
+      - RABBITMQ_DEFAULT_PASS=admin
+----
+
+
+== Kafka
+
+Apache Kafka ist eine Open-Source-Softwareplattform für die Stream-Verarbeitung, die von LinkedIn entwickelt und an die Apache Software Foundation donated wurde und in Scala und Java geschrieben wurde. Das Projekt zielt darauf ab, eine einheitliche Plattform mit hohem Durchsatz und geringer Latenz für die Verarbeitung von real-time data feeds bereitzustellen.
+
+=== Messaging System
+
+Apache Kafka ist ein auf Publish-Subscribe basierendes, dauerhaftes Messaging-System. Ein Nachrichtensystem sendet Nachrichten zwischen Prozessen, Anwendungen und Servern.
+
+image::durable-message-system.png[]
+
+Anwendungen stellen eine Verbindung zu diesem System her und übertragen einen Datensatz auf ein Topic. Ein Datensatz kann jede Art von Information enthalten. Zum Beispiel Informationen zu einem Ereignis, das auf einer Website aufgetreten ist, oder zu einem Ereignis, das ein Ereignis auslösen soll. Eine andere Anwendung kann eine Verbindung zum System herstellen und Datensätze aus einem Thema verarbeiten oder erneut verarbeiten. Die gesendeten Daten werden gespeichert, bis eine bestimmte Aufbewahrungsfrist verstrichen ist.
+
+Datensätze sind Byte-Arrays, in denen jedes Objekt in jedem Format gespeichert werden kann. Ein Datensatz hat vier Attribute, Schlüssel und Wert muessen definiert sein, und die anderen Attribute, Timestamp und Überschriften sind optional. Der Wert kann alles sein, was gesendet werden muss, z. B. JSON oder einfacher Text.
+
+=== Kafka Topic
+
+Ein Topic ist eine Kategorie, unter welchem Datensätze gespeichert und veröffentlicht werden.
+
+Wie bereits erwähnt, sind alle Kafka-Datensätze in Topics unterteilt. Produzentenanwendungen schreiben Daten in Themen und Verbraucheranwendungen lesen aus Themen. Im Broker veröffentlichte Datensätze bleiben im Broker, bis eine konfigurierbare Aufbewahrungsfrist verstrichen ist.
+
+Kafka speichert Aufzeichnungen in die logs, sodass die Verbraucher für die Verfolgung der Position in den logs verantwortlich sind, die als „Offset“ bezeichnet wird. Typischerweise erhöht ein Verbraucher den Offset linear, wenn Nachrichten gelesen werden. Die Position wird jedoch tatsächlich vom Verbraucher gesteuert, der Nachrichten in beliebiger Reihenfolge verarbeiten kann. Beispielsweise kann ein Verbraucher bei der Wiederaufbereitung von Datensätzen auf einen älteren Offset zurückgesetzt werden
+
+=== Consumer und Consumer groups
+
+Verbraucher können Nachrichten ab einem bestimmten Offset lesen und von jedem beliebigen Offset aus lesen. Auf diese Weise können Verbraucher jederzeit dem Broker beitreten.
+
+=== Beispiel
+
+== Quellen
+
+* https://www.cloudkarafka.com/blog/2016-11-30-part1-kafka-for-beginners-what-is-apache-kafka.html
+* https://mikemadisonweb.github.io/2017/05/04/tldr-series-rabbitmq/
+* https://dzone.com/articles/getting-started-rabbitmq-java
+* https://hivemq.github.io/mqtt-cli/docs/installation/packages.html
+* https://hub.docker.com/_/rabbitmq
+* https://www.rabbitmq.com/channels.html
+* https://www.rabbitmq.com/tutorials/amqp-concepts.html#programmable-protocol
+* https://www.rabbitmq.com/tutorials/amqp-concepts.html#programmable-protocol
+* https://www.rabbitmq.com/tutorials/tutorial-five-java.html
+* https://www.rabbitmq.com/tutorials/tutorial-four-java.html
+* https://github.com/rabbitmq/rabbitmq-java-client/
+* https://www.rabbitmq.com/java-client.html
+* https://www.rabbitmq.com/tutorials/tutorial-one-java.html
+* https://hackernoon.com/rabbitmq-amqp-mqtt-rest-of-the-world-74433c5ff8c7
+* https://www.hivemq.com/blog/mqtt-essentials-part-6-mqtt-quality-of-service-levels/
+* https://www.hivemq.com/mqtt/
+* https://iot.stackexchange.com/questions/44/when-and-why-to-use-mqtt-protocol
+* https://www.tutorialspoint.com/apache_kafka/apache_kafka_simple_producer_example.htm

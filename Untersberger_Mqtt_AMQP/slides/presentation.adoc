@@ -1,0 +1,82 @@
+:imagesdir: ./images
+
+= MQTT | AMQP
+
+== Overview
+
+* MQTT
+* AMQP
+* Kafka
+
+== MQTT
+
+=== Begriffe
+=== Broker
+=== Topic
+=== Quality of Service (QoS)
+=== !
+
+image::mqtt-protocol.png[MQTT]
+
+=== Demo
+
+=== QoS 0 - maximal einmal
+
+image::QoS-0.png[]
+
+=== QoS 1 - mindestens einmal
+
+image::QoS-1.png[]
+
+=== QoS 2 - genau einmal
+
+image::QoS-2.png[]
+
+== AMQP
+
+=== Begriffe
+=== Channel
+image::amqp_channel.jpeg[]
+=== Queue
+=== Wie funktioniert AMQP?
+=== !
+image::amqp-example.png[]
+=== RabbitMq
+=== Demo
+
+== Kafka
+
+=== Messaging System
+=== !
+image::durable-message-system.png[]
+=== Kafka Topic
+=== Consumer und Consumer groups
+=== Unterschied zu MQTT
+
+== Quellen
+
+== !
+
+* https://www.cloudkarafka.com/blog/2016-11-30-part1-kafka-for-beginners-what-is-apache-kafka.html
+* https://mikemadisonweb.github.io/2017/05/04/tldr-series-rabbitmq/
+* https://dzone.com/articles/getting-started-rabbitmq-java
+* https://hivemq.github.io/mqtt-cli/docs/installation/packages.html
+* https://hub.docker.com/_/rabbitmq
+
+== !
+* https://www.rabbitmq.com/tutorials/tutorial-five-java.html
+* https://www.rabbitmq.com/tutorials/tutorial-four-java.html
+* https://github.com/rabbitmq/rabbitmq-java-client/
+* https://www.rabbitmq.com/java-client.html
+* https://www.rabbitmq.com/tutorials/tutorial-one-java.html
+
+== !
+* https://www.hivemq.com/mqtt/
+* https://iot.stackexchange.com/questions/44/when-and-why-to-use-mqtt-protocol
+* https://www.tutorialspoint.com/apache_kafka/apache_kafka_simple_producer_example.htm
+* https://www.rabbitmq.com/channels.html
+* https://www.rabbitmq.com/tutorials/amqp-concepts.html#programmable-protocol
+
+== !
+* https://hackernoon.com/rabbitmq-amqp-mqtt-rest-of-the-world-74433c5ff8c7
+* https://www.hivemq.com/blog/mqtt-essentials-part-6-mqtt-quality-of-service-levels/

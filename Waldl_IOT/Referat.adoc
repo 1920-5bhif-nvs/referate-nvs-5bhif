@@ -26,21 +26,20 @@ Da IOT-Systeme Daten über die User abspeichern müssen um effektiv funktioniere
 === Sicherheit
 Die meisten technischen Sicherheitsbedenken sind mit denen herkömmlicher Server, Workstations und Smartphones vergleichbar und umfassen eine schwache Authentifizierung, das Vergessen Standardanmeldeinformationen zu ändern, unverschlüsselte Nachrichten die zwischen Geräten gesendet werden, SQL-Injektionen und eine schlechte Behandlung von Sicherheitsupdates. Viele IoT-Geräte haben jedoch schwerwiegende betriebliche Einschränkungen hinsichtlich der ihnen zur Verfügung stehenden Rechenleistung. Diese Einschränkungen machen es ihnen häufig unmöglich, grundlegende Sicherheitsmaßnahmen wie die Implementierung von Firewalls oder die Verwendung starker Kryptosysteme zur Verschlüsselung ihrer Kommunikation mit anderen Geräten direkt anzuwenden. Aufgrund des niedrigen Preises und der Kundenorientierung vieler Geräte ist ein robustes Sicherheitspatchsystem ungewöhnlich
 
+== ESP32
+ESP32 ist eine Reihe von kostengünstigen Mikrocontrollern mit geringem Stromverbrauch auf einem Chip mit integriertem Wi-Fi und Dual-Mode-Bluetooth. Die ESP32-Serie verwendet einen Tensilica Xtensa LX6-Mikroprozessor sowohl in Dual-Core- als auch in Single-Core-Varianten und umfasst integrierte Antennenschalter, HF-Balun, Leistungsverstärker, rauscharmen Empfangsverstärker, Filter und Power-Management-Module. ESP32 wurde von Espressif Systems, einem chinesischen Unternehmen mit Sitz in Shanghai, entwickelt und von TSMC im 40-nm-Verfahren hergestellt. Es ist ein Nachfolger des Mikrocontrollers ESP8266.
+
 == Praxis
 
 === GHT22
-Beispiel vom IOT-Samstag mit Luftfeutigkeitsmesser vorgezeigt
-
-=== OTA
-Wenn man sein eigenes IOT-System besitzt ist es von vorteil OTA auf seinen Microcontrollern installiert zu haben. OTA bedeutet “Over the Air” womit gemeint ist das man die Firmware der einzelnen Microcontroller über Wlan auf die Microcontroller spielt ohne den Microcontroller berühren zu müssen. Das ist dann ziemlich hilfreich wenn sich der Microcontroller an schwer- oder unerreichbaren Orten befindet. 
+Luftfeuchtigkeitssensor, welcher mittels MQTT Temperature und Luftfeuchtigkeit published.
 
 == Quellen
 https://de.wikipedia.org/wiki/Internet_der_Dinge
 
 https://en.wikipedia.org/wiki/Internet_of_things
 
-Werbevideo Bosch:
-https://www.youtube.com/watch?v=v2kV6pgJxuo
+https://en.wikipedia.org/wiki/ESP32
 
 https://github.com/espressif/esp-idf
 

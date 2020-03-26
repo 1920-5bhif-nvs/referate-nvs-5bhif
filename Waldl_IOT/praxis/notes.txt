@@ -1,0 +1,3 @@
+1. clone repo https://github.com/gosouth/DHT22
+2. change program
+3. add mqtt menuconfig

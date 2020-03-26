@@ -55,4 +55,8 @@ dependencies {
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$version_kotlin_coroutines"
     implementation "androidx.room:room-runtime:$version_room"
     kapt "androidx.room:room-compiler:$version_room"
+    implementation "org.mapstruct:mapstruct:$version_mapstruct"
+    kapt "org.mapstruct:mapstruct-processor:$version_mapstruct"
+    implementation "com.github.pozo:mapstruct-kotlin:$version_mapstruct_kotlin"
+    kapt "com.github.pozo:mapstruct-kotlin-processor:$version_mapstruct_kotlin"
 }

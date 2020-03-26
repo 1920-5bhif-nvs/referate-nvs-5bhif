@@ -1,6 +1,9 @@
 package at.htl.demoapplication.network
 
-class NetworkPerson (
+import com.github.pozo.KotlinBuilder
+
+@KotlinBuilder
+data class NetworkPerson (
     val name: String,
     val username: String
 )

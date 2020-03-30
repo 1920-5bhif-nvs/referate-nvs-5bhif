@@ -1,5 +1,6 @@
 # Set up
 
+* git clone https://github.com/gosouth/DHT22
 * Change the DHT-pin in line 23 according to the pin you installed the DHT22 sensor
 [source,c]
 ----

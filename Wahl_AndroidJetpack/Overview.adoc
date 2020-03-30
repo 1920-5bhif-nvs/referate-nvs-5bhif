@@ -1,5 +1,4 @@
 = Android Jetpack
-
 :toc:
 
 == Übersicht
@@ -300,13 +299,10 @@ val send: Intent = Intent().apply{
     putExtra(Intent.EXTRA_TEXT,editText.text.toString())
     type = "text/plain"
 }
+
+startActivity(send)
 ----
 Es gibt sehr viele vordefinierte Actions, es ist aber auch möglich, eigene zu definieren.
-[source,kotlin]
-----
-    startActivity(send)
-----
-
 
 
 === Notifications
@@ -347,3 +343,10 @@ val notificationManager = this.context!!.getSystemService(Context.NOTIFICATION_S
     notificationManager!!.createNotificationChannel(channel)
     notificationManager.notify(1, notification)
 ----
+
+== Mögliche Fragen
+
+* Warum basieren alle Android Apps auf Jetpack? 
+* Welche Bereiche der App-Entwicklung beeinflusst Jetpack?
+* Warum ist es sinnvoll ViewModel zu verwenden?
+* Wie überliefert man dem User Information während die App nicht geöffnet ist? 

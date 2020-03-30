@@ -1,0 +1,37 @@
+= Django and co
+Erik Mayrhofer
+:toc:
+
+== Welche Alternativen zu ASP.NET, JavaEE und MicroProfile gibt es?
+Es gibt viele kleine Serverside WebFrameworks, die alle irgendene Spezialität haben.
+
+Bekanntere Beispiele hierfür sind Django, Flask
+
+=== Was ist Django?
+Django ist ein python-serverside-WebFramework, welches relativ weit verbreitet ist.
+
+Es kommt mit einer großen Menge an Bibliotheken, wie einem OR-Mapper, einem Admin-Interface, Authentifizierung und einer Template Sprache - ähnlich zu JSF.
+
+Standardmäßig gibt es keinen Weg damit REST-Apis zu schreiben, jedoch gibt es eine seperate Bibliothek `django-rest-framework` die genau dies ermöglicht.
+
+Django orientiert sich am MVC-Pattern und ist definitiv production-ready, da es sich bereits 13 Jahre lang am Markt ethabliert hat (Beispiele: Spotify, Udemy, JSFiddle).
+
+Ein weiteres Prinzip hinter Django ist das DRY-Pattern, da sie versuchen Boilerplate-Code komplett zu vermeiden.
+
+=== Was ist Flask?
+Flask ist eine python-Library zur Erstellung von WebServern. Sie konzentriert sich darauf klein zu sein, und ausschließlich ihren Job zu erfüllen - Python ins Web zu kriegen.
+Sie wurde von vom österreichischen Programmierer Armin Ronacher geschrieben.
+
+Flask verwendet die `Jinja`-Templating engine und hat keinen mitgelieferte DB-Library. Sie folgt dem Unix-Prinzip, dass ein Tool, genau ein Ding machen soll, dies dafür gescheit.
+
+Flask wirbt damit, dass man sehr schnell eine Web-Schnittstelle am laufen hat, da dies im besten Falle genau ein Pythonfile mit einem Import und wenigen Zeilen Code ist.
+
+==== Was ist der Unterschied zwischen Flask und Django?
+Flask ist eine kleine, schnelle python serverside Web-Library, welche sich ausschließlich darauf konzentriert. 
+Django ist ein komplettes serverside Web-Framework, welches inkludierte OR-Mapper etc. hat, dafür aber auch etwas bloated ist.
+
+=== Was ist WSGI?
+WSGI (Web server gateway interface) ist eine Python Webschnittstellenspezifikation, welche die Kommunikatino zwischen python-Webframeworks und python-Web-Application-Servern ermöglicht. Auch wenn Flask und Django integrierte Development-Server haben, kann man mit ihnen gebaute Applications auf einen Python-Web-App-Server deployen (Ähnlich wie Wildfly in Java).
+
+Ein Beispiel für einen solchen Web-App-Server ist Apache, wenn man das mod_wsgi-Modul aktiviert. Eine andere Implementierung ist uWSGI.
+

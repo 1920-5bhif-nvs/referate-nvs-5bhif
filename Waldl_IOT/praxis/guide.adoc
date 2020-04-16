@@ -147,7 +147,7 @@ void DHT_task(void *pvParameter)
 		mqtt_publish_msg(&msg);
 		snprintf(msg.topic, 20, "humidity");
    		snprintf(msg.payload, 100, "%f", getHumidity());
-        mqtt_publish_msg(&msg);
+        	mqtt_publish_msg(&msg);
 
 		// -- wait at least 2 sec before reading again ------------
 		// The interval of whole process must be beyond 2 seconds !! 

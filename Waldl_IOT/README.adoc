@@ -1,0 +1,46 @@
+:toc:
+:imagesdir: ./images
+= IOT
+
+== Allgemein
+Das Internet der Dinge (Internet of Things, IoT) ist ein System miteinander verbundener Computergeräte, mechanischer und digitaler Maschinen die mit eindeutigen IDs versehen sind und Daten über ein Netzwerk übertragen können, ohne dass Mensch zu Mensch erforderlich ist oder Mensch-Computer-Interaktion.
+
+Auf dem Verbrauchermarkt ist die IoT-Technologie das Synonym für Produkte, die sich auf das Konzept des "intelligenten Hauses" beziehen (z. B. Beleuchtungskörper, Thermostate, Haussicherungssysteme und Kameras sowie andere Haushaltsgeräte).
+
+Diese Lösungen sollen Menschen bei einfachen Tätigkeiten helfen und dabei nicht ablenken oder auffallen. Das dies Möglich ist bekommt jedes physische Objekt einen virtuellen Vertreter welcher mit anderen IOT-Objekten kommunizieren kann.
+Dieses System von Sensoren und Aktoren ist notwendig, da Dinge in der realen Welt bestimmte Zustände haben auf welche reagiert werden soll zum Beispiel: “Luft ist kalt”, “Kühlschrank ist leer”, “Es ist 6 Uhr”, und auf jeden dieser Zustände muss unterschiedlich reagiert werden.
+Diese Flexibilität auf verschiedene Zustände reagieren zu können ist nicht nur praktisch sonder soll auch helfen Energie zu sparen, da zum Beispiel die Heizung abgeschaltet wird wenn sich gerade keine Personen in einem gewissen Bereich aufhalten.
+
+== Arten von IOT(Beispiele)
+Ein wachsender Anteil der IoT-Geräte wird für den Verbraucherbedarf entwickelt, einschließlich vernetzter Fahrzeuge, Heimautomatisierung, tragbarer Technologie, vernetzter Gesundheit und Geräten mit Fernüberwachungsfunktionen.
+
+=== Smart Home
+image::Smart-Home.png[]
+IoT-Geräte sind Teil des umfassenderen Konzepts der Heimautomation, das Beleuchtung, Heizung und Klimaanlage sowie Medien- und Sicherheitssysteme umfassen kann. Zu den langfristigen Vorteilen zählen Energieeinsparungen, indem automatisch sichergestellt wird, dass Licht und Elektronik ausgeschaltet werden.
+
+== Probleme
+
+=== Datenschutz
+Da IOT-Systeme Daten über die User abspeichern müssen um effektiv funktionieren zu können. Können die Unternehmen die das gewisse System entwickelt hat, diese Daten auch sehr einfach an Wirtschaftsunternehmen, Staaten oder Organisationen verkaufen, da diese an genau solchen Informationen interessiert sind.
+
+=== Sicherheit
+Die meisten technischen Sicherheitsbedenken sind mit denen herkömmlicher Server, Workstations und Smartphones vergleichbar und umfassen eine schwache Authentifizierung, das Vergessen Standardanmeldeinformationen zu ändern, unverschlüsselte Nachrichten die zwischen Geräten gesendet werden, SQL-Injektionen und eine schlechte Behandlung von Sicherheitsupdates. Viele IoT-Geräte haben jedoch schwerwiegende betriebliche Einschränkungen hinsichtlich der ihnen zur Verfügung stehenden Rechenleistung. Diese Einschränkungen machen es ihnen häufig unmöglich, grundlegende Sicherheitsmaßnahmen wie die Implementierung von Firewalls oder die Verwendung starker Kryptosysteme zur Verschlüsselung ihrer Kommunikation mit anderen Geräten direkt anzuwenden. Aufgrund des niedrigen Preises und der Kundenorientierung vieler Geräte ist ein robustes Sicherheitspatchsystem ungewöhnlich
+
+== ESP32
+ESP32 ist eine Reihe von kostengünstigen Mikrocontrollern mit geringem Stromverbrauch auf einem Chip mit integriertem Wi-Fi und Dual-Mode-Bluetooth. Die ESP32-Serie verwendet einen Tensilica Xtensa LX6-Mikroprozessor sowohl in Dual-Core- als auch in Single-Core-Varianten und umfasst integrierte Antennenschalter, HF-Balun, Leistungsverstärker, rauscharmen Empfangsverstärker, Filter und Power-Management-Module. ESP32 wurde von Espressif Systems, einem chinesischen Unternehmen mit Sitz in Shanghai, entwickelt und von TSMC im 40-nm-Verfahren hergestellt. Es ist ein Nachfolger des Mikrocontrollers ESP8266.
+
+== Praxis
+
+=== GHT22
+Luftfeuchtigkeitssensor, welcher mittels MQTT Temperature und Luftfeuchtigkeit published.
+
+== Quellen
+https://de.wikipedia.org/wiki/Internet_der_Dinge
+
+https://en.wikipedia.org/wiki/Internet_of_things
+
+https://en.wikipedia.org/wiki/ESP32
+
+https://github.com/espressif/esp-idf
+
+https://github.com/gkoe/iotsamstag1920

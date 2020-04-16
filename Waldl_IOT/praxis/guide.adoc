@@ -90,7 +90,7 @@ if the message shows up everything is working fine
 
 For the ESP to be able to send messages over MQTT you need a few extra libraries. They are all provided in the "extra_libs" folder. There also is a projbuild file, which you need to set the router and the password the ESP32 should connect to.
 
-Take all the files in the "extra_libs" folder and copy them into the main folder of the GitHub repository you cloned before.
+Take all the files in the "extra_libs" folder and copy them into the *main* folder of the GitHub repository you cloned before.
 
 Now you will need to change the DHT_main.c file a bit.
 

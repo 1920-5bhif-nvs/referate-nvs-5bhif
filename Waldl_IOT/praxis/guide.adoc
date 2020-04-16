@@ -129,7 +129,7 @@ To send messages over the MQTT network you need to change the *DHT_task* functio
 ----
 void DHT_task(void *pvParameter)
 {
-	setDHTgpio( 27 );
+	setDHTgpio( <your GPIO-Pin number> );
 	while(1) {
 	
 		printf("=== Reading DHT ===\n" );

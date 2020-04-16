@@ -179,7 +179,7 @@ make flash monitor
 ----
 
 ### Monitoring via Node-RED
-image::images/node-red_flow.png[]
+image::images/node-red_flow.PNG[]
 To monitor the data of your DHT22 you can create a small flow in Node-RED.
 
 To subscribe to the topic you want you need the node *mqtt in* it is in the *network* category.
@@ -194,7 +194,7 @@ Now the easiest way to see the output is to do it via the *debug* node in the *c
 
 To see if it worked click the red *deploy* button in the top right corner
 
-image::images/node-red_deploy.png[]
+image::images/node-red_deploy.PNG[]
 and then click the little bug button
 
 image::images/node-red_debug.png[]

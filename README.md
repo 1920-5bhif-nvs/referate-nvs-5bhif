@@ -20,3 +20,4 @@
 ### 18. [Android](Schwarcz_Android) von Florian Schwarcz (10. März 2020)
 ### 19?. [AndroidJetpack](Wahl_AndroidJetpack) von Maximilian Wahl (17. März 2020)
 ### 20. [MQTT | AMQP](Untersberger_Mqtt_AMQP) von Tim Untersberger (26. März 2020)
+### 20. [Testen](Schürz_Testen) von Jonas Schürz (26. März 2020)

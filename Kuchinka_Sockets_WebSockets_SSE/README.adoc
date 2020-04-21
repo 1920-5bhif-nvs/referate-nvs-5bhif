@@ -27,6 +27,9 @@ Verbindung wird durch einen der Teilnehmer beendet.
 
 image::images/image1.png[]
 
+=== Beispiel
+Unter `/SocketChat` befindet sich ein Java-Projekt mit den Klassen `ChatClient.java` `ChatServer.java`. Beide Klassen enthalten jeweils eine main-Methode. Zuerst muss der Server gestartet werden, dann können beliebig viele Client gestartet werden, die dann untereinander über die Konsole kommunizieren können.
+
 == WebSockets
 Websockets wurden entwickelt um bidirektionale Kommunikation zwischen Browsern und Servern zu ermöglichen. Initialisiert wird die Verbindung mittels Upgrade-Request bzw. Handshake auf http Ebene;
 Header:Connection: Upgrade
@@ -37,9 +40,15 @@ WebSockets machen immer dann Sinn und ist performant, wenn ständig zwischen Ser
 
 image::images/image2.png[]
 
+=== Beispiel
+Unter `/ChatServer` kann ein WebSocket-Server für ein Chatprogramm gestartet werden. Im Ordner `/ChatClient` befindet sich ein `index.html` mit eine minimalistischen HTML/JS-Client (kann z.B. mit VSCode-LiveServer oder auch mit Docker gestartet werden). Das Beispiel ist von der Funktionalität her indent mit dem Socket-Beispiel (einfacher Multiuser-Chat).
+
 == Server Sent Events
 SSE ist eine Alternative zu HTTP-Streaming und in manchen Fällen auch zu WebSockets. SSE erlaubt aber keine bidirektionale Kommunikation wie WebSockets und macht daher eher bei Applikationen Sinn, bei denen hauptsächlich der Server an den Client Daten schickt. Sollte der Client auch Daten an den Server schicken müssen, sind WebSockets passender, außer es handelt sich um eine geringe Häufigkeit. Dann können die Nachrichten vom Client zum Server auch mit REST realisiert werden. SSE basiert auf HTTP und wird mit einem Handshake vom Client initialisiert. Unter dem Content-Type: text/event-stream werden dann sogenannte Events vom Server an den Client geschickt. Verschiedene Arten von Events werden mit einem Namen identifiziert, die der Client subscriben kann. Eine SSE-Verbindung kann in JavaScript sehr leicht mit einer EventSource gehandelt werden.
 let eventSource = new EventSource("http://localhost:8080/sse/endpoint"); eventSource.addEventListener("prime", e => console.log("hello"), false);
 Das Abonnieren der verschiedenen Event-Typen ist mit dem Publish-Subscribe-Pattern vergleichbar.
 
 image::images/image3.png[]
+
+=== Beispiel
+Unter `/SSEDemo` ist ein Java-Programm zu finden, dass jede Sekunde die aktuelle Uhrzeit per Server-Sent-Event an verbundene Client sendet. Im Ordner `/SSEClient` befindet sich ein `index.html` mit eine minimalistischen HTML/JS-Client (kann z.B. mit VSCode-LiveServer oder auch mit Docker gestartet werden). Der Client zeigt lediglich die vom Server erhaltene Uhrzeit an.

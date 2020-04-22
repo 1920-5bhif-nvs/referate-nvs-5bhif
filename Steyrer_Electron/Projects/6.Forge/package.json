@@ -1,0 +1,37 @@
+{
+  "name": "electron-update-app",
+  "productName": "electron-update-app",
+  "version": "2.0.1",
+  "description": "My Electron application description",
+  "repository": "csteyrer/ElectronUpdateApp",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "electron-forge start",
+    "package": "electron-forge package",
+    "make": "electron-forge make",
+    "publish": "electron-forge publish",
+    "lint": "echo \"No linting configured\""
+  },
+  "keywords": [],
+  "author": {
+    "name": "Christian Steyrer",
+    "email": "christian.steyrer@hotmail.com"
+  },
+  "license": "MIT",
+  "config": {
+    "forge": "./forge.config.js"
+  },
+  "dependencies": {
+    "electron-squirrel-startup": "^1.0.0",
+    "update-electron-app": "^1.5.0"
+  },
+  "devDependencies": {
+    "@electron-forge/cli": "^6.0.0-beta.48",
+    "@electron-forge/maker-deb": "^6.0.0-beta.48",
+    "@electron-forge/maker-rpm": "^6.0.0-beta.48",
+    "@electron-forge/maker-squirrel": "^6.0.0-beta.48",
+    "@electron-forge/maker-zip": "^6.0.0-beta.48",
+    "@electron-forge/publisher-github": "^6.0.0-beta.48",
+    "electron": "8.0.0"
+  }
+}

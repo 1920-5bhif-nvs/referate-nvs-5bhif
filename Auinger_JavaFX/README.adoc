@@ -123,8 +123,11 @@ in MainController.java
     }
 ....
 Funktionen im DatabaseViewController werden aufgerufen.
-=== 3.6 JavaFX ObservableList
-https://docs.oracle.com/javase/8/javafx/api/javafx/collections/ObservableList.html[ObservableList DOCS]
+
+=== 3.6 JavaFX ObservableList   
+
+https://docs.oracle.com/javase/8/javafx/api/javafx/collections/ObservableList.html[ObservableList DOCS]    
+
 Dies sind Listen die dynamisch Veränderungen verarbeiten können und in JavaFX-Elementen genutzt werden.
 ObservableLists werden wie folgt erstellt:
 ....

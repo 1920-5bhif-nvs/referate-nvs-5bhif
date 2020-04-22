@@ -123,3 +123,93 @@ in MainController.java
     }
 ....
 Funktionen im DatabaseViewController werden aufgerufen.
+=== 3.6 JavaFX ObservableList
+https://docs.oracle.com/javase/8/javafx/api/javafx/collections/ObservableList.html[ObservableList DOCS]
+Dies sind Listen die dynamisch Veränderungen verarbeiten können und in JavaFX-Elementen genutzt werden.
+ObservableLists werden wie folgt erstellt:
+....
+ObservableList<Pupil> pupils
+                = FXCollections.observableArrayList();
+        pupils.add(new Pupil("Jan", "Neuburger", "5BHIF"));
+        pupils.add(new Pupil("Thomas", "Antensteiner", "5BHIF"));
+        pupils.add(new Pupil("Philipp", "Auinger", "5BHIF"));
+....
+Diese Liste kann dann wie schon erwähnt in den unterschiedlichsten Elementen angezeigt werden.
+Zum Beispiel in einer ChoiceBox / DropDown-Menü:
+....
+ChoiceBox<Pupil> choiceBox
+                = new ChoiceBox<Pupil>(pupils);
+....
+Kompletter Code einer solchen Anwendung:
+....
+public class FxObserableListTest extends Application {
+
+    @Override
+    public void start(Stage hauptStage) {
+		ObservableList<Pupil> pupils
+                = FXCollections.observableArrayList();
+        pupils.add(new Pupil("Jan", "Neuburger", "5BHIF"));
+        pupils.add(new Pupil("Thomas", "Antensteiner", "5BHIF"));
+        pupils.add(new Pupil("Philipp", "Auinger", "5BHIF"));
+		ChoiceBox<Pupil> choiceBox
+						= new ChoiceBox<Pupil>(pupils);
+        choiceBox.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                ChoiceBox<Pupil> cb
+                        = (ChoiceBox<Pupil>) event.getSource();
+                Pupil pupil = cb.getValue();
+                int index = cb.getSelectionModel().getSelectedIndex();
+                System.out.println("index: "+index+" Wert: "+pupil.FirstName);
+            }
+        });
+        VBox pane = new VBox();
+        pane.getChildren().add(choiceBox);
+        Scene scene = new Scene(pane, 250, 80);
+        hauptStage.setScene(scene);
+        hauptStage.show();
+    }
+
+    public static void main(String[] args) {
+        launch(args);
+    }
+}
+....
+Ausgabe bei Auswahl einer Option in der ChoiceBox:
+....
+Index: 0 Wert: Jan
+Index: 2 Wert: Philipp
+Index: 1 Wert: Thomas
+....
+Natürlich ist auch ein Binding in der FXML Datei möglich:
+....
+ComboBox prefWidth="135.0" fx:id="cbPupils" items="${controller.pupils}; 
+....
+Natürlich muss die ObservableList im Controller erstellt werden.
+....
+public class Controller implements Initializable
+{
+
+    @FXML
+    TextField tfText;
+
+    @FXML
+    ComboBox cbNames;
+
+    ObservableList<String> pupils = FXCollections.observableArrayList("Philipp", "Anti", "Jan");
+
+    private final StringProperty twoWayInput = new SimpleStringProperty("");
+
+    @FXML
+    private void handleButtonAction(ActionEvent event)
+    {
+        String temp = tfText.getText();
+        if (temp.equals("") || names.contains(temp))
+        {
+            return;
+        }
+        names.add(temp);
+    }
+	...
+....
+ObservableLists im allgemeinen helfen sehr, Daten dynamisch anzuzeigen und diese zu nutzen. 
